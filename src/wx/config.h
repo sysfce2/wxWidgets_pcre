@@ -17,6 +17,7 @@
 /* src/config.h.  Generated from config.h.in by configure.  */
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
+
 /* PCRE2 is written in Standard C, but there are a few non-standard things it
 can cope with, allowing it to run on SunOS4 and other "close to standard"
 systems.
@@ -68,14 +69,23 @@ sure both macros are undefined; an emulation function will then be used. */
    LF does in an ASCII/Unicode environment. */
 /* #undef EBCDIC_NL25 */
 
+/* Define to 1 if you have the <assert.h> header file. */
+/* #undef HAVE_ASSERT_H */
+
 /* Define this if your compiler supports __attribute__((uninitialized)) */
 /* #undef HAVE_ATTRIBUTE_UNINITIALIZED */
 
 /* Define to 1 if you have the 'bcopy' function. */
 /* #undef HAVE_BCOPY */
 
+/* Define this if your compiler provides __assume() */
+/* #undef HAVE_BUILTIN_ASSUME */
+
 /* Define this if your compiler provides __builtin_mul_overflow() */
 /* #undef HAVE_BUILTIN_MUL_OVERFLOW */
+
+/* Define this if your compiler provides __builtin_unreachable() */
+/* #undef HAVE_BUILTIN_UNREACHABLE */
 
 /* Define to 1 if you have the <bzlib.h> header file. */
 /* #undef HAVE_BZLIB_H */
@@ -161,7 +171,8 @@ sure both macros are undefined; an emulation function will then be used. */
 /* Define to 1 if you have the <unistd.h> header file. */
 /* #undef HAVE_UNISTD_H */
 
-/* Define to 1 if the compiler supports simple visibility declarations. */
+/* Define to 1 if the compiler supports GCC compatible visibility
+   declarations. */
 /* #undef HAVE_VISIBILITY */
 
 /* Define to 1 if you have the <wchar.h> header file. */
@@ -190,7 +201,6 @@ sure both macros are undefined; an emulation function will then be used. */
 #endif
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
-/* This is ignored unless you are using libtool. */
 #ifndef LT_OBJDIR
 #define LT_OBJDIR ".libs/"
 #endif
@@ -261,7 +271,7 @@ sure both macros are undefined; an emulation function will then be used. */
 #define PACKAGE_NAME "PCRE2"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "PCRE2 10.44"
+#define PACKAGE_STRING "PCRE2 10.45"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "pcre2"
@@ -270,7 +280,7 @@ sure both macros are undefined; an emulation function will then be used. */
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "10.44"
+#define PACKAGE_VERSION "10.45"
 
 /* The value of PARENS_NEST_LIMIT specifies the maximum depth of nested
    parentheses (of any kind) in a pattern. This limits the amount of system
@@ -302,6 +312,7 @@ sure both macros are undefined; an emulation function will then be used. */
 
 /* to make a symbol visible */
 #define PCRE2_EXPORT
+
 
 /* If you are compiling for a system other than a Unix-like system or
    Win32, and it needs some magic to be inserted before the definition
@@ -473,8 +484,9 @@ sure both macros are undefined; an emulation function will then be used. */
 /* # undef _XOPEN_SOURCE */
 #endif
 
+
 /* Version number of package */
-#define VERSION "10.44"
+#define VERSION "10.45"
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */
