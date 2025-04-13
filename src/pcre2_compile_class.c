@@ -1067,6 +1067,7 @@ const uint8_t *cbits = cb->cbits;
 /* Some functions such as add_to_class() or eclass processing
 expects that the bitset is stored in cb->classbits.classbits. */
 uint8_t *const classbits = cb->classbits.classbits;
+int i;
 
 #ifdef SUPPORT_UNICODE
 BOOL utf = (options & PCRE2_UTF) != 0;
@@ -1259,10 +1260,10 @@ while (TRUE)
     if (taboffset >= 0)
       {
       if (tabopt >= 0)
-        for (int i = 0; i < 32; i++)
+        for (i = 0; i < 32; i++)
           pbits.classbits[i] |= cbits[i + taboffset];
       else
-        for (int i = 0; i < 32; i++)
+        for (i = 0; i < 32; i++)
           pbits.classbits[i] &= (uint8_t)(~cbits[i + taboffset]);
       }
 
@@ -1280,10 +1281,10 @@ while (TRUE)
       uint32_t *classwords = cb->classbits.classwords;
 
       if (local_negate)
-        for (int i = 0; i < 8; i++)
+        for (i = 0; i < 8; i++)
           classwords[i] |= (uint32_t)(~pbits.classwords[i]);
       else
-        for (int i = 0; i < 8; i++)
+        for (i = 0; i < 8; i++)
           classwords[i] |= pbits.classwords[i];
       }
 
@@ -1305,22 +1306,22 @@ while (TRUE)
     switch(escape)
       {
       case ESC_d:
-      for (int i = 0; i < 32; i++) classbits[i] |= cbits[i+cbit_digit];
+      for (i = 0; i < 32; i++) classbits[i] |= cbits[i+cbit_digit];
       break;
 
       case ESC_D:
       should_flip_negation = TRUE;
-      for (int i = 0; i < 32; i++)
+      for (i = 0; i < 32; i++)
         classbits[i] |= (uint8_t)(~cbits[i+cbit_digit]);
       break;
 
       case ESC_w:
-      for (int i = 0; i < 32; i++) classbits[i] |= cbits[i+cbit_word];
+      for (i = 0; i < 32; i++) classbits[i] |= cbits[i+cbit_word];
       break;
 
       case ESC_W:
       should_flip_negation = TRUE;
-      for (int i = 0; i < 32; i++)
+      for (i = 0; i < 32; i++)
         classbits[i] |= (uint8_t)(~cbits[i+cbit_word]);
       break;
 
@@ -1332,12 +1333,12 @@ while (TRUE)
       longer treat \s and \S specially. */
 
       case ESC_s:
-      for (int i = 0; i < 32; i++) classbits[i] |= cbits[i+cbit_space];
+      for (i = 0; i < 32; i++) classbits[i] |= cbits[i+cbit_space];
       break;
 
       case ESC_S:
       should_flip_negation = TRUE;
-      for (int i = 0; i < 32; i++)
+      for (i = 0; i < 32; i++)
         classbits[i] |= (uint8_t)(~cbits[i+cbit_space]);
       break;
 
@@ -1689,7 +1690,7 @@ if ((xclass_props & XCLASS_REQUIRED) != 0)
     if (negate_class)
       {
       uint32_t *classwords = cb->classbits.classwords;
-      for (int i = 0; i < 8; i++) classwords[i] = ~classwords[i];
+      for (i = 0; i < 8; i++) classwords[i] = ~classwords[i];
       }
 
     if (has_bitmap == NULL)
@@ -1810,7 +1811,7 @@ if (negate_class)
   {
   uint32_t *classwords = cb->classbits.classwords;
 
-  for (int i = 0; i < 8; i++) classwords[i] = ~classwords[i];
+  for (i = 0; i < 8; i++) classwords[i] = ~classwords[i];
   }
 
 if ((SELECT_VALUE8(!utf, 0) || negate_class != should_flip_negation) &&
@@ -1888,7 +1889,8 @@ else
 
 if (!preserve_classbits)
   {
-  for (int i = 0; i < 8; i++)
+  int i;
+  for (i = 0; i < 8; i++)
     pop_info->bits.classwords[i] = ~pop_info->bits.classwords[i];
   }
 }
@@ -1902,6 +1904,7 @@ static void
 fold_binary(int op, eclass_op_info *lhs_op_info, eclass_op_info *rhs_op_info,
   PCRE2_SIZE *lengthptr)
 {
+int i;
 switch (op)
   {
   /* ECL_AND truth table:
@@ -1956,7 +1959,7 @@ switch (op)
     lhs_op_info->op_single_type = 0;
     }
 
-  for (int i = 0; i < 8; i++)
+  for (i = 0; i < 8; i++)
     lhs_op_info->bits.classwords[i] &= rhs_op_info->bits.classwords[i];
   break;
 
@@ -2012,7 +2015,7 @@ switch (op)
     lhs_op_info->op_single_type = 0;
     }
 
-  for (int i = 0; i < 8; i++)
+  for (i = 0; i < 8; i++)
     lhs_op_info->bits.classwords[i] |= rhs_op_info->bits.classwords[i];
   break;
 
@@ -2075,7 +2078,7 @@ switch (op)
     lhs_op_info->op_single_type = 0;
     }
 
-  for (int i = 0; i < 8; i++)
+  for (i = 0; i < 8; i++)
     lhs_op_info->bits.classwords[i] ^= rhs_op_info->bits.classwords[i];
   break;
 
@@ -2208,7 +2211,8 @@ switch (meta)
       {
       uint32_t *classwords = pop_info->bits.classwords;
 
-      for (int i = 0; i < 8; i++)
+      int i;
+      for (i = 0; i < 8; i++)
         if (classwords[i] != 0)
           {
           context->needs_bitmap = TRUE;
@@ -2571,7 +2575,8 @@ if (lengthptr != NULL)
   }
 
 /* Do some useful counting of what's in the bitmap. */
-for (int i = 0; i < 8; i++)
+int i;
+for (i = 0; i < 8; i++)
   if (op_info.bits.classwords[i] != 0xffffffff)
     {
     allbitsone = FALSE;

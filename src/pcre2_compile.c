@@ -6031,6 +6031,7 @@ for (;; pptr++)
   uint32_t subreqcuflags, subfirstcuflags;
   open_capitem *oc;
   PCRE2_UCHAR mcbuffer[8];
+  uint32_t i;
 
   /* Get next META item in the pattern and its potential argument. */
 
@@ -6414,7 +6415,7 @@ for (;; pptr++)
     verbarglen = *(++pptr);
     verbculen = 0;
     tempcode = code++;
-    for (int i = 0; i < (int)verbarglen; i++)
+    for (i = 0; i < verbarglen; i++)
       {
       meta = *(++pptr);
 #ifdef SUPPORT_UNICODE
@@ -6474,7 +6475,6 @@ for (;; pptr++)
     bravalue = OP_COND;
       {
       int count, index;
-      unsigned int i;
       PCRE2_SPTR name;
       named_group *ng = cb->named_groups;
       uint32_t length = *(++pptr);
@@ -6943,7 +6943,7 @@ for (;; pptr++)
       this name is duplicated. */
 
       groupnumber = 0;
-      for (unsigned int i = 0; i < cb->names_found; i++, ng++)
+      for (i = 0; i < cb->names_found; i++, ng++)
         {
         if (length == ng->length &&
             PRIV(strncmp)(name, ng->name, length) == 0)
@@ -7297,7 +7297,7 @@ for (;; pptr++)
           *lengthptr += delta;
           }
 
-        else for (int i = 0; i < replicate; i++)
+        else for (i = 0; i < (uint32_t)replicate; i++)
           {
           memcpy(code, previous, CU2BYTES(1 + LINK_SIZE));
           previous = code;
@@ -7477,7 +7477,7 @@ for (;; pptr++)
                 reqcu = firstcu;
                 reqcuflags = firstcuflags;
                 }
-              for (uint32_t i = 1; i < repeat_min; i++)
+              for (i = 1; i < repeat_min; i++)
                 {
                 memcpy(code, previous, CU2BYTES(len));
                 code += len;
@@ -7519,7 +7519,7 @@ for (;; pptr++)
 
           /* This is compiling for real */
 
-          else for (uint32_t i = repeat_max; i >= 1; i--)
+          else for (i = repeat_max; i >= 1; i--)
             {
             *code++ = OP_BRAZERO + repeat_type;
 
