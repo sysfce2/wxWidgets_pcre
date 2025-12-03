@@ -18997,8 +18997,7 @@ ac_config_commands="$ac_config_commands script-chmod"
 
 # Make sure that pcre2_chartables.c is removed in case the method for
 # creating it was changed by reconfiguration.
-ac_config_commands="$ac_config_commands delete-old-chartables"
-
+# AC_CONFIG_COMMANDS([delete-old-chartables], [rm -f src/pcre2_chartables.c])
 
 # Handle --enable-Werror/errwarn. This must come last, so that we don't mess
 # with any of the library-detection tests (or similar).
@@ -20108,7 +20107,6 @@ do
     "pcre2-config") CONFIG_FILES="$CONFIG_FILES pcre2-config" ;;
     "src/pcre2.h") CONFIG_FILES="$CONFIG_FILES src/pcre2.h" ;;
     "script-chmod") CONFIG_COMMANDS="$CONFIG_COMMANDS script-chmod" ;;
-    "delete-old-chartables") CONFIG_COMMANDS="$CONFIG_COMMANDS delete-old-chartables" ;;
 
   *) as_fn_error $? "invalid argument: '$ac_config_target'" "$LINENO" 5;;
   esac
@@ -21353,7 +21351,6 @@ ltmain=$ac_aux_dir/ltmain.sh
 
  ;;
     "script-chmod":C) chmod a+x pcre2-config ;;
-    "delete-old-chartables":C) rm -f src/pcre2_chartables.c ;;
 
   esac
 done # for ac_tag
